@@ -1,0 +1,5 @@
+city = int(input())
+road = list(map(int, input().split()))
+price = list(map(int, input().split()))
+distance = sum(road)
+print(distance)
