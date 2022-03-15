@@ -48,3 +48,58 @@ def solution2(n, lost, reserve):
 
     return n - len(set_lost)
 
+# 그리디 Level 2 조이스틱 - 내 풀이
+def solution3(name):
+    asci = [ord(i) for i in name]
+
+    count = 0
+    for i in range(len(asci)):
+        if asci[i] == 65:
+            count += 1
+        elif (asci[i] - 65) > 13:
+            count += 26 - (asci[i] - 65)
+        else:
+            count += asci[i] - 65
+    return asci
+
+# 그리디 Level 2 조이스틱 - 찾은 풀이
+def solution4(name):
+    # 상하 조정으로 알파벳 바꾸기
+    change = [min(ord(i) - ord('A'), ord('Z') - ord(i) + 1) for i in name]
+    idx = 0
+    answer = 0
+    print(change)
+    while True:
+        # 바꾼 알파벳의 횟수 answer에 저장 후 값 0으로 변환. 바꾼 알파벳 구분을 위해.
+        print('0.', 'idx:', idx)
+        answer += change[idx]
+        print('1.', answer)
+        change[idx] = 0
+        print('2.', change)
+        if sum(change) == 0:
+            return answer
+
+        # 좌우 이동방향 정하기
+        left, right = 1, 1
+        print('change[idx-left]:', change[idx-left])
+        print('change[idx-right]:', change[idx - right])
+        while change[idx - left] == 0:
+            left += 1       # 왼쪽으로 갔을 때
+            print('3.', 'idx:', idx, 'left:', left)
+        while change[idx + right] == 0:
+            right += 1
+            print('4.', 'idx:', idx, 'right:', right)
+
+        # 위치(인덱스) 조정
+        if left < right:
+            answer += left
+            idx += -left
+            print('5.', 'left:', left, 'idx:', idx, 'answer:', answer)
+        else:
+            answer += right
+            idx += right
+            print('6.', 'right:', right, 'idx:', idx, 'answer:', answer)
+
+    return answer
+
+print(solution4("AABAAAAABBB"))
