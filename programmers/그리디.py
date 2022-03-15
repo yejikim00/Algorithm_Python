@@ -102,4 +102,63 @@ def solution4(name):
 
     return answer
 
-print(solution4("AABAAAAABBB"))
+# 그리디 Level 2 큰 수 만들기 - 내 풀이
+from itertools import combinations
+
+def solution5(number, k):
+    arr_com = list(combinations(number, len(number) - k))
+    arr = []
+    for i in arr_com:
+        arr.append((''.join(i)))
+    return max(arr)
+
+
+def combination(arr, r):
+    # 1.
+    used = [0 for _ in range(len(arr))]
+
+    # 2.
+    def generate(chosen):
+        if len(chosen) == r:
+            print(chosen)
+            return
+
+        # 3.
+        start = arr.index(chosen[-1]) + 1 if chosen else 0
+        for nxt in range(start, len(arr)):
+            if used[nxt] == 0 and (nxt == 0 or arr[nxt - 1] != arr[nxt] or used[nxt - 1]):
+                chosen.append(arr[nxt])
+                used[nxt] = 1
+                generate(chosen)
+                chosen.pop()
+                used[nxt] = 0
+
+    generate([])
+
+
+def solution6(number, k):
+    answer = []
+    num = [n for n in number]
+    choice = len(number) - k
+    arr = combination(num, choice)
+    for i in arr:
+        print(i)
+    # for i in arr:
+    #     for j in i:
+    #         answer.append(''.join(j))
+
+    return arr
+
+# 그리디 Level 2 큰 수 찾기 - 찾은 풀이
+def solution7(number, k):
+    answer = []
+
+    for num in number:
+        while k > 0 and answer and answer[-1] < num:
+            answer.pop()
+            k -= 1
+        answer.append(num)
+
+    return ''.join(answer[:len(number) - k])
+
+print(solution7("41772854", 2))
