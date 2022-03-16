@@ -161,4 +161,44 @@ def solution7(number, k):
 
     return ''.join(answer[:len(number) - k])
 
-print(solution7("41772854", 2))
+# print(solution7("41772854", 2))
+
+# 그리디 Level 2 구명보트 - 내 풀이
+def solution8(people, limit):
+    answer = 0
+    save = []
+    people.sort()
+
+    for i in range(len(people)):
+        save.append(people[i])
+        if sum(save) > limit:
+            people.pop(i)
+            save.pop()
+            answer += 1
+        elif sum(save) == limit:
+            answer += 1
+            save.clear()
+
+    answer += len(people)
+    return answer
+
+# 그리디 Level 2 구명보트 - 찾은 풀이
+def solution9(people, limit):
+    answer = 0
+    people.sort()
+
+    left = 0
+    right = len(people) - 1
+
+    while left <= right:
+        if people[left] + people[right] <= limit:
+            left += 1
+            right -= 1
+        else:
+            right -= 1
+
+        answer += 1
+
+    return answer
+
+print(solution9([70, 80, 50], 100))
