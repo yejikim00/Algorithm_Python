@@ -200,5 +200,3 @@ def solution9(people, limit):
         answer += 1
 
     return answer
-
-print(solution9([70, 80, 50], 100))
