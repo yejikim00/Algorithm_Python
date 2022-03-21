@@ -97,4 +97,17 @@ def settings(data):
     return data[1]
 
 result = sorted(array, key=settings)
-print(result)
+# print(result)
+
+# 실전문제1 위에서 아래로
+def ex1():
+    n = int(input())
+    arr = []
+    for i in range(n):
+        arr.append(int(input()))
+
+    arr = reversed(sorted(arr))
+    for i in arr:
+        print(i, end=' ')
+
+# ex1()
