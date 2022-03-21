@@ -111,3 +111,23 @@ def ex1():
         print(i, end=' ')
 
 # ex1()
+
+
+# 실전문제 2 성적이 낮은 순서로 학생 출력하기
+def ex2():
+    n = int(input())
+    dic = []
+
+    for i in range(n):
+        a, b = input().split()
+        dic.append([a, int(b)])
+
+    def settings(data):
+        return data[1]
+
+    answer = sorted(dic, key=settings)
+
+    for i in answer:
+        print(i[0], end= ' ')
+
+ex2()
