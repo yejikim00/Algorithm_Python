@@ -130,4 +130,27 @@ def ex2():
     for i in answer:
         print(i[0], end= ' ')
 
-ex2()
+# ex2()
+
+
+# 실전문제 3 두 배열의 원소 교체
+def ex3():
+    n, k = map(int, input().split())
+    # sum = 0
+
+    a = list(map(int, input().split()))
+    b = list(map(int, input().split()))
+    a = sorted(a)
+    b = sorted(b, reverse=True)
+
+    for i in range(len(a)):
+        for j in range(len(b)):
+            if a[i] < b[j]:
+                a[i], b[j] = b[j], a[j]
+                k -= 1
+            if k == 0:
+                break
+
+    return sum(a)
+
+print(ex3())
