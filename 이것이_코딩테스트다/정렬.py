@@ -136,7 +136,6 @@ def ex2():
 # 실전문제 3 두 배열의 원소 교체
 def ex3():
     n, k = map(int, input().split())
-    # sum = 0
 
     a = list(map(int, input().split()))
     b = list(map(int, input().split()))
@@ -146,11 +145,28 @@ def ex3():
     for i in range(len(a)):
         for j in range(len(b)):
             if a[i] < b[j]:
-                a[i], b[j] = b[j], a[j]
+                a[i], b[j] = b[j], a[i]
                 k -= 1
             if k == 0:
                 break
 
     return sum(a)
+
+def ex3_answer():
+    n, k = map(int, input().split())
+    a = list(map(int, input().split()))
+    b = list(map(int, input().split()))
+
+    a.sort()
+    b.sort(reverse=True)
+
+    for i in range(k):
+        if a[i] < b[i]:
+            a[i], b[i] = b[i], a[i]
+        else:
+            break
+
+    return sum(a)
+
 
 print(ex3())
