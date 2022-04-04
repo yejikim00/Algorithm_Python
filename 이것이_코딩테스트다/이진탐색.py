@@ -89,16 +89,14 @@ def solution1_binary(array, target, start, end):
     mid = (start + end) // 2
 
     if start > end:
-        print('no')
         return 'no'
 
     if array[mid] == target:
-        print('yes')
         return 'yes'
     elif array[mid] > target:
-        solution1_binary(array, target, start, mid-1)
+        return solution1_binary(array, target, start, mid-1)
     else:
-        solution1_binary(array, target, mid+1, end)
+        return solution1_binary(array, target, mid+1, end)
 
 def solution1_binary_search(array, target, start, end):
     array.sort()
@@ -121,7 +119,8 @@ def solution1():
     answer = []
 
     for t in find:
-        answer.append(solution1_binary_search(array, t, 0, n-1))
+        answer.append(solution1_binary(array, t, 0, n-1))
+
     return answer
 
 # answer = solution1()
@@ -159,3 +158,33 @@ def answer2():
             print('yes', end=' ')
         else:
             print('no', end=' ')
+
+
+# 떡볶이 떡 만들기
+def solution2_binary(array, start, end, m):
+    array.sort()
+    sum = 0
+    while start <= end:
+        mid = (start + end) // 2
+        for i in array:
+            result = i-mid
+            if result < 0:
+                result = 0
+            sum += result
+
+        if sum == m:
+            return mid
+        elif sum > m:
+            start = mid+1
+        else:
+            end = mid-1
+        sum = 0
+    return mid
+
+def solution2():
+    n, m = list(map(int, input().split()))
+    array = list(map(int, input().split()))
+
+    print(solution2_binary(array, 0, max(array)-1, m))
+
+solution2()
