@@ -80,3 +80,82 @@ def binary_for():
         print(result+1)
 
 # binary_for()
+
+# 부품 찾기
+import sys
+
+def solution1_binary(array, target, start, end):
+    array.sort()
+    mid = (start + end) // 2
+
+    if start > end:
+        print('no')
+        return 'no'
+
+    if array[mid] == target:
+        print('yes')
+        return 'yes'
+    elif array[mid] > target:
+        solution1_binary(array, target, start, mid-1)
+    else:
+        solution1_binary(array, target, mid+1, end)
+
+def solution1_binary_search(array, target, start, end):
+    array.sort()
+    while start <= end:
+        mid = (start + end) // 2
+        if array[mid] == target:
+            return 'yes'
+        elif array[mid] > target:
+            end = mid-1
+        else:
+            start = mid+1
+
+    return 'no'
+
+def solution1():
+    n = int(input())
+    array = list(map(int, input().split()))
+    m = int(input())
+    find = list(map(int, input().split()))
+    answer = []
+
+    for t in find:
+        answer.append(solution1_binary_search(array, t, 0, n-1))
+    return answer
+
+# answer = solution1()
+# for a in answer:
+#     print(a, end=' ')
+
+
+def answer1():
+    n = int(input())
+    array = [0] * 10
+
+    for i in input().split():
+        array[int(i)] = 1
+
+    print(array)
+
+    m = int(input())
+    x = list(map(int, input().split()))
+
+    for i in x:
+        if array[i] == 1:
+            print('yes', end=' ')
+        else:
+            print('no', end=' ')
+
+def answer2():
+    n = int(input())
+    array = set(map(int, input().split()))
+
+    m = int(input())
+    x = list(map(int, input().split()))
+
+    for i in x:
+        if i in array:
+            print('yes', end=' ')
+        else:
+            print('no', end=' ')
