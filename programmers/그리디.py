@@ -200,3 +200,87 @@ def solution9(people, limit):
         answer += 1
 
     return answer
+
+
+# 그리디 Level 3 - 섬 연결하기(내 풀이)
+def find(parent, x):
+    if parent[x] != x:
+        parent[x] = find(parent, parent[x])
+    return parent[x]
+
+
+def union(parent, a, b):
+    a = find(parent, a)
+    b = find(parent, b)
+    if a < b:
+        parent[b] = a
+    else:
+        parent[a] = b
+
+
+def solution10(n, costs):
+    edges = []
+    result = 0
+    parent = [0] * (n+1)
+
+    for i in range(1, n+1):
+        parent[i] = i
+
+    for edge in costs:
+        a, b, cost = edge
+        edges.append((cost, a, b))
+
+    edges.sort()
+
+    for edge in edges:
+        cost, a, b = edge
+        if find(parent, a) != find(parent, b):
+            union(parent, a, b)
+            result += cost
+
+    return result
+
+
+# 그리디 Level 3 - 섬 연결하기(찾은 풀이1)
+def find_11(parent, x):
+    if parent[x] != x:
+        parent[x] = find(parent, parent[x])
+    return parent[x]
+
+def solution11(n, costs):
+    answer = 0
+    edges = sorted([(x[2], x[0], x[1]) for x in costs])
+    parent = [i for i in range(n)]
+    bridges = 0
+
+    for cost, a, b in edges:
+        if find_11(parent, a) != find_11(parent, b):
+            answer += cost
+            parent[find_11(parent, a)] = b
+            bridges += 1
+        if bridges == n-1:
+            break
+
+    return answer
+
+
+# 그리디 Level 3 - 섬 연결하기(찾은 풀이2)
+def solution12(n, costs):
+    answer = 0
+    costs.sort(key=lambda x: x[2]) # 비용 기준으로 오름차순 정렬
+    connect = set([costs[0][0]]) # 연결을 확인하는 집합
+
+    # Kruskal 알고리즘 이용
+    while len(connect) != n:
+        print(connect)
+        for cost in costs:
+            if cost[0] in connect and cost[1] in connect:
+                continue
+            if cost[0] in connect or cost[1] in connect:
+                connect.update([cost[0], cost[1]])
+                answer += cost[2]
+                break
+
+    return answer
+
+
