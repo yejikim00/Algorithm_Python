@@ -35,18 +35,20 @@ def solution1(n, lost, reserve):
 
     return len(answer)
 
+
 # 그리디 Level 1 체육복 - 찾은 풀이
 def solution2(n, lost, reserve):
     set_reserve = set(reserve) - set(lost)
     set_lost = set(lost) - set(reserve)
 
     for i in set_reserve:
-        if i-1 in set_lost:
-            set_lost.remove(i-1)
-        elif i+1 in set_lost:
-            set_lost.remove(i+1)
+        if i - 1 in set_lost:
+            set_lost.remove(i - 1)
+        elif i + 1 in set_lost:
+            set_lost.remove(i + 1)
 
     return n - len(set_lost)
+
 
 # 그리디 Level 2 조이스틱 - 내 풀이
 def solution3(name):
@@ -61,6 +63,7 @@ def solution3(name):
         else:
             count += asci[i] - 65
     return asci
+
 
 # 그리디 Level 2 조이스틱 - 찾은 풀이
 def solution4(name):
@@ -81,10 +84,10 @@ def solution4(name):
 
         # 좌우 이동방향 정하기
         left, right = 1, 1
-        print('change[idx-left]:', change[idx-left])
+        print('change[idx-left]:', change[idx - left])
         print('change[idx-right]:', change[idx - right])
         while change[idx - left] == 0:
-            left += 1       # 왼쪽으로 갔을 때
+            left += 1  # 왼쪽으로 갔을 때
             print('3.', 'idx:', idx, 'left:', left)
         while change[idx + right] == 0:
             right += 1
@@ -102,8 +105,10 @@ def solution4(name):
 
     return answer
 
+
 # 그리디 Level 2 큰 수 만들기 - 내 풀이
 from itertools import combinations
+
 
 def solution5(number, k):
     arr_com = list(combinations(number, len(number) - k))
@@ -149,6 +154,7 @@ def solution6(number, k):
 
     return arr
 
+
 # 그리디 Level 2 큰 수 찾기 - 찾은 풀이
 def solution7(number, k):
     answer = []
@@ -160,6 +166,7 @@ def solution7(number, k):
         answer.append(num)
 
     return ''.join(answer[:len(number) - k])
+
 
 # print(solution7("41772854", 2))
 
@@ -181,6 +188,7 @@ def solution8(people, limit):
 
     answer += len(people)
     return answer
+
 
 # 그리디 Level 2 구명보트 - 찾은 풀이
 def solution9(people, limit):
@@ -221,9 +229,9 @@ def union(parent, a, b):
 def solution10(n, costs):
     edges = []
     result = 0
-    parent = [0] * (n+1)
+    parent = [0] * (n + 1)
 
-    for i in range(1, n+1):
+    for i in range(1, n + 1):
         parent[i] = i
 
     for edge in costs:
@@ -247,6 +255,7 @@ def find_11(parent, x):
         parent[x] = find(parent, parent[x])
     return parent[x]
 
+
 def solution11(n, costs):
     answer = 0
     edges = sorted([(x[2], x[0], x[1]) for x in costs])
@@ -258,7 +267,7 @@ def solution11(n, costs):
             answer += cost
             parent[find_11(parent, a)] = b
             bridges += 1
-        if bridges == n-1:
+        if bridges == n - 1:
             break
 
     return answer
@@ -267,8 +276,8 @@ def solution11(n, costs):
 # 그리디 Level 3 - 섬 연결하기(찾은 풀이2)
 def solution12(n, costs):
     answer = 0
-    costs.sort(key=lambda x: x[2]) # 비용 기준으로 오름차순 정렬
-    connect = set([costs[0][0]]) # 연결을 확인하는 집합
+    costs.sort(key=lambda x: x[2])  # 비용 기준으로 오름차순 정렬
+    connect = set([costs[0][0]])  # 연결을 확인하는 집합
 
     # Kruskal 알고리즘 이용
     while len(connect) != n:
@@ -284,3 +293,35 @@ def solution12(n, costs):
     return answer
 
 
+# 그리디 Level 3 - 단속카메라(내 풀이)
+def solution13(routes):
+    answer = 0
+    routes.sort()
+    r_min = min(min(routes))
+    r_max = max(max(routes))
+    nums = [i for i in range(r_min, r_max + 1)]
+    print(nums)
+    print(routes.count(-3))
+    for n in range(len(nums)):
+        if routes.count(nums[n]) == 1:
+            nums[n] = 'one'
+        elif routes.count(nums[n]) >= 2:
+            nums[n] = 'over'
+    print(nums)
+    return answer
+
+
+# 그리디 Level 3 - 단속카메라(내 풀이)
+def solution14(routes):
+    answer = 1
+    routes.sort(key=lambda x: x[1])
+    camera = routes[0][1]
+    for i in range(1, len(routes)):
+        if camera < routes[i][0]:
+            camera = routes[i][1]
+            answer += 1
+
+    return answer
+
+
+print(solution14([[-20, -15], [-14, -5], [-18, -13], [-5, -3]]))
