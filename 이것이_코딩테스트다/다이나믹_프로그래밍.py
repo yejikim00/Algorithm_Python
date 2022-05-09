@@ -62,4 +62,28 @@ def answer1():
 
     return d[x]
 
-# print(answer1())
+
+
+#### 개미 전사 ####
+def solution2(n, num):
+    # n = int(input())
+    # num = list(map(int, input().split()))
+    dp = []
+    i = 0
+    j = 0
+
+    # while len(dp) != len(num)-2:
+    for i in range(len(num)):
+        for j in range(i, len(num)):
+            print('i: {}, j: {}, num[i]: {}, num[j]: {}, i-j: {}'.format(i, j, num[i], num[j], abs(i-j)))
+            if abs(i-j) > 1:
+                if len(dp) == i+1:
+                    print('dp[i]: {}, num[j]: {}'.format(dp[i], num[j]))
+                    dp[i].append(sum(dp[i]) + num[j])
+                    print('if dp:', dp)
+                else:
+                    dp.append([num[i]+num[j]])
+                    print('else dp:', dp)
+
+    return dp
+print(solution2(1, [1, 3, 1, 5]))
