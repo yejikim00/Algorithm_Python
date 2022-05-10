@@ -86,4 +86,18 @@ def solution2(n, num):
                     print('else dp:', dp)
 
     return dp
-print(solution2(1, [1, 3, 1, 5]))
+
+
+def answer2(N, num):
+    d = [0] * 100
+
+    d[0] = num[0]
+    d[1] = max(num[0], num[1])
+
+    for i in range(2, N):
+        d[i] = max(d[i-1], d[i-2] + num[i])
+
+    return d[N-1]
+
+
+print(answer2(4, [1, 3, 1, 5]))
