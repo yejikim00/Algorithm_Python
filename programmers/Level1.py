@@ -194,8 +194,47 @@ def solution6(new_id):
     return new_id
 
 
-print(solution6("...!@BaT#*..y.abcdefghijklm"))
-print(solution6("z-+.^."))
-print(solution6("=.="))
-print(solution6("123_.def"))
-print(solution6("abcdefghijklmn.p"))
+# print(solution6("...!@BaT#*..y.abcdefghijklm"))
+# print(solution6("z-+.^."))
+# print(solution6("=.="))
+# print(solution6("123_.def"))
+# print(solution6("abcdefghijklmn.p"))
+
+
+
+# Level 1 - 숫자 문자열과 영단어: 내 풀이
+def solution7(s):
+    answer = 0
+    num = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+
+    for n in num:
+        if n in s:
+            s = s.replace(n, str(num.index(n)))
+
+    answer = int(s)
+
+    return answer
+
+
+# print(solution7("one4seveneight"))
+# print(solution7("23four5six7"))
+# print(solution7("2three45sixseven"))
+# print(solution7("123"))
+
+
+
+# Level 1 - 숫자 문자열과 영단어: 찾은 풀이
+def solution8(s):
+    num_dic = {"zero": "0", "one": "1", "two": "2", "three": "3", "four": "4", "five": "5", "six": "6", "seven": "7", "eight": "8", "nine": "9"}
+    answer = s
+
+    for key, value in num_dic.items():
+        answer = answer.replace(key, value)
+
+    return int(answer)
+
+
+print(solution8("one4seveneight"))
+print(solution8("23four5six7"))
+print(solution8("2three45sixseven"))
+print(solution8("123"))
