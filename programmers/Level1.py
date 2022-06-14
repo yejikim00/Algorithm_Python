@@ -234,7 +234,146 @@ def solution8(s):
     return int(answer)
 
 
-print(solution8("one4seveneight"))
-print(solution8("23four5six7"))
-print(solution8("2three45sixseven"))
-print(solution8("123"))
+# print(solution8("one4seveneight"))
+# print(solution8("23four5six7"))
+# print(solution8("2three45sixseven"))
+# print(solution8("123"))
+
+
+
+# Level 1 - 키패드 누르기: 내 풀이
+def solution9(numbers, hand):
+    answer = ''
+    r = 0
+    l = 0
+
+    for num in numbers:
+        if num % 3 == 1:
+            answer = answer + 'L'
+            l = num
+
+        elif num % 3 == 0:
+            answer = answer + 'R'
+            r = num
+
+        else:
+            if l % 3 == 2 and r % 3 == 2:
+                num = 10
+                if abs(l - num) > abs(r - num):
+                    answer = answer + 'R'
+                    r = num
+                elif abs(l - num) < abs(r - num):
+                    answer = answer + 'L'
+                    l = num
+                elif abs(l - num) == abs(r - num):
+                    if hand == 'right':
+                        answer = answer + 'R'
+                        r = num
+                    elif hand == 'left':
+                        answer = answer + 'L'
+                        l = num
+            else:
+                if abs(l - num) > abs(r - num):
+                    answer = answer + 'R'
+                    r = num
+                elif abs(l - num) < abs(r - num):
+                    answer = answer + 'L'
+                    l = num
+                elif abs(l - num) == abs(r - num):
+                    if hand == 'right':
+                        answer = answer + 'R'
+                        r = num
+                    elif hand == 'left':
+                        answer = answer + 'L'
+                        l = num
+
+    return answer
+
+
+
+# Level 1 - 키패드 누르기: 찾은 풀이1
+def solution10(numbers, hand):
+    answer = ''
+    l = 10
+    r = 12
+
+    for n in numbers:
+        if n in [1, 4, 7]:
+            answer += 'L'
+            l = n
+
+        elif n in [3, 6, 9]:
+            answer += 'R'
+            r = n
+
+        else:
+            if n == 0:
+                n = 11
+
+            l_dis = abs(l - n) // 3 + abs(l - n) % 3
+            r_dis = abs(r - n) // 3 + abs(r - n) % 3
+
+            if l_dis > r_dis:
+                answer += 'R'
+                r = n
+
+            elif l_dis < r_dis:
+                answer += 'L'
+                l = n
+
+            else:
+                if hand == 'right':
+                    answer += 'R'
+                    r = n
+                else:
+                    answer += 'L'
+                    l = n
+
+    return answer
+
+
+# Level 1 - 키패드 누르기: 찾은 풀이2
+def solution11(numbers, hand):
+    answer = ''
+    key_dict = {1:(0,0),2:(0,1),3:(0,2),
+                4:(1,0),5:(1,1),6:(1,2),
+                7:(2,0),8:(2,1),9:(2,2),
+                '*':(3,0),0:(3,1),'#':(3,2)}
+
+    left = [1,4,7]
+    right = [3,6,9]
+    lhand = '*'
+    rhand = '#'
+    for i in numbers:
+        if i in left:
+            answer += 'L'
+            lhand = i
+        elif i in right:
+            answer += 'R'
+            rhand = i
+        else:
+            curPos = key_dict[i]
+            lPos = key_dict[lhand]
+            rPos = key_dict[rhand]
+            ldist = abs(curPos[0]-lPos[0]) + abs(curPos[1]-lPos[1])
+            rdist = abs(curPos[0]-rPos[0]) + abs(curPos[1]-rPos[1])
+
+            if ldist < rdist:
+                answer += 'L'
+                lhand = i
+            elif ldist > rdist:
+                answer += 'R'
+                rhand = i
+            else:
+                if hand == 'left':
+                    answer += 'L'
+                    lhand = i
+                else:
+                    answer += 'R'
+                    rhand = i
+
+    return answer
+
+print(solution11([1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5], "right"))
+print(solution11([7, 0, 8, 2, 8, 3, 1, 5, 7, 6, 2], "left"))
+print(solution11([1, 2, 3, 4, 5, 6, 7, 8, 9, 0], "right"))
