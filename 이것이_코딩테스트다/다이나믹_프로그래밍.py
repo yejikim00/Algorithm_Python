@@ -100,4 +100,19 @@ def answer2(N, num):
     return d[N-1]
 
 
-print(answer2(4, [1, 3, 1, 5]))
+# print(answer2(4, [1, 3, 1, 5]))
+
+
+### 바닥 공사 ### --> 성공 answer와 동일~!
+def solution3():
+    N = int(input())
+    dp = [0] * 1000
+    dp[0] = 1
+    dp[1] = 3
+
+    for i in range(2, len(dp)):
+        dp[i] = (2*dp[i-2] + dp[i-1]) % 796796
+
+    return dp[N-1]
+
+print(solution3())
