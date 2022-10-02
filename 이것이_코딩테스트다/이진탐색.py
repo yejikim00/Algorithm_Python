@@ -82,6 +82,30 @@ def binary_for():
 # binary_for()
 
 # 부품 찾기
+# 다시 풀기
+
+def solution_again(store, customer):
+    answer = []
+        
+    for c in customer:
+        pl = 0
+        pr = len(store)-1
+        while True:
+            pc = (pl + pr) // 2
+            if store[pc] == c:
+                answer.append('yes')
+                break
+            elif store[pc] < c:
+                pl = pc + 1
+            else:
+                pr = pc - 1
+            
+            if pl > pr:
+                answer.append('no')
+                break
+        
+    return answer
+
 import sys
 
 def solution1_binary(array, target, start, end):
