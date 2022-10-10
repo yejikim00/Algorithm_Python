@@ -115,4 +115,50 @@ def solution3():
 
     return dp[N-1]
 
-print(solution3())
+# print(solution3())
+
+
+### 효율적인 화폐 구성 ###
+def solution4():
+    N, M = map(int, input().split())
+    coin = []
+    dp = [10001] * M+1
+
+    for _ in range(N):
+        c = int(input())
+        coin.append(c)
+        dp[c] = 1
+        for i in range(1, M+1):
+            if i % c == 0:
+                dp[i] = min(dp[i], i//c)
+
+    print(dp[1:M+1])
+
+# print(solution4())
+
+
+def answer4():
+    # 정수 N, M 입력받기
+    N, M = map(int, input().split())
+    # N개의 화폐 단위 정보 입력받기
+    array = []
+    for i in range(N):
+        array.append(int(input()))
+
+    # 한 번 계산된 결과를 저장하기 위한 DP 테이블 초기화
+    d = [10001] * (M+1)
+
+    # 다이나믹 프로그래밍 진행(보텀업)
+    d[0] = 0 # 0원은 아무것도 필요하지 않으니 0개로 입력한다.
+    for i in range(N): # i = 화폐 단위에 해당되는 인덱스 ex) i=2, 2
+        for j in range(array[i], M+1): # j = 금액 ex)1, 2, ..., 7
+            if d[j - array[i]] != 10001: # (i-k)원을 만드는 방법이 존재하는 경우
+                d[j] = min(d[j], d[j-array[i]]+1)
+
+    # 계산된 출력
+    if d[M] == 10001: # 최종적으로 M원을 만드는 방법이 없는 경우
+        print(-1)
+    else:
+        print(d[M])
+
+answer4()
